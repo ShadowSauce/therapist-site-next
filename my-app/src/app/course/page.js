@@ -15,8 +15,8 @@ export default function CoursePage() {
   // ─── Desktop: active lesson state ───
   const [activeLessonId, setActiveLessonId] = useState(lessons[0].id);
 
-  // ─── Mobile: expanded lesson state ───
-  const [expandedLesson, setExpandedLesson] = useState(null);
+  // ─── Mobile: expanded lesson state (first lesson expanded by default) ───
+  const [expandedLesson, setExpandedLesson] = useState(lessons[0]?.id || null);
 
   // ─── FAQ state ───
   const [activeFaqIndex, setActiveFaqIndex] = useState(null);
@@ -69,6 +69,8 @@ export default function CoursePage() {
 
   return (
     <>
+    <div className="course-page-wrapper">
+      
       {/* ========== NAVBAR ========== */}
       <header className="navbar course-navbar" id="navbar">
         <div className="nav-wrapper">
@@ -197,7 +199,14 @@ export default function CoursePage() {
 
       {/* ========== MOBILE ACCORDION (hidden on desktop) ========== */}
       <div className="course-accordion-mobile">
-        <h2 className="lessons-title">Программа курса</h2>
+        {/* ─── HEADER ─── */}
+        <div className="mobile-accordion-header">
+          <h2 className="lessons-title">Программа курса</h2>
+          <div className="mobile-divider"></div>
+          <p className="mobile-subtitle">Нажмите на модуль, чтобы раскрыть содержание</p>
+        </div>
+
+        {/* ─── ACCORDION LIST ─── */}
         <div className="lesson-accordion">
           {lessons.map((lesson) => {
             const isExpanded = expandedLesson === lesson.id;
@@ -233,7 +242,18 @@ export default function CoursePage() {
             );
           })}
         </div>
+
+        {/* ─── BACK TO TOP BUTTON ─── */}
+        <button
+          className="back-to-top"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          aria-label="Вернуться в начало"
+        >
+          ↑ Наверх
+        </button>
       </div>
+      
+    </div>
     </>
   );
 }
