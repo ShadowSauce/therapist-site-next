@@ -193,6 +193,24 @@ p {
   top: 96px;
 }
 
+.sidebar-header {
+  display: none;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.sidebar-toggle {
+  font-size: 0.8rem;
+  transition: transform 0.3s ease;
+  color: var(--muted);
+}
+
+.sidebar-toggle.open {
+  transform: rotate(180deg);
+}
+
 .sidebar-title {
   font-size: 0.78rem;
   font-weight: 700;
@@ -353,7 +371,178 @@ p {
   .hamburger {
     display: flex;
   }
+
+  
+}
+.faq-container {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 
 
+
+/* ===== HYBRID LAYOUT: Desktop sidebar + Mobile accordion ===== */
+
+/* Hide mobile accordion on desktop */
+.course-accordion-mobile {
+  display: none;
+}
+
+/* ── Mobile styles ── */
+@media (max-width: 768px) {
+  /* Hide the desktop sidebar+preview on mobile */
+  .course-shell {
+    display: none !important;
+  }
+
+  /* Show the mobile accordion */
+  .course-accordion-mobile {
+    display: block;
+    padding: 0 0 40px 0;
+  }
+}
+
+/* ── Desktop override ── */
+@media (min-width: 769px) {
+  .course-shell {
+    display: grid !important;
+  }
+
+  .course-accordion-mobile {
+    display: none !important;
+  }
+}
+
+/* ===== MOBILE ACCORDION STYLES ===== */
+
+.course-accordion-mobile .lessons-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  margin-bottom: 24px;
+}
+
+.course-accordion-mobile .lesson-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.course-accordion-mobile .lesson-accordion-item {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.course-accordion-mobile .lesson-accordion-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Manrope', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
+  color: #2F312E;
+}
+
+.course-accordion-mobile .lesson-accordion-header:hover {
+  background: rgba(233, 225, 215, 0.15);
+}
+
+.course-accordion-mobile .lesson-accordion-header .lesson-number {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #A9B7A1;
+  letter-spacing: 0.1em;
+  min-width: 28px;
+}
+
+.course-accordion-mobile .lesson-accordion-header .lesson-title {
+  flex: 1;
+}
+
+.course-accordion-mobile .lesson-accordion-icon {
+  font-size: 1.3rem;
+  color: #A9B7A1;
+  transition: transform 0.3s ease;
+}
+
+.course-accordion-mobile .lesson-accordion-item.active .lesson-accordion-icon {
+  transform: rotate(45deg);
+}
+
+.course-accordion-mobile .lesson-accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+}
+
+.course-accordion-mobile .lesson-accordion-item.active .lesson-accordion-content {
+  max-height: 2000px;
+}
+
+.course-accordion-mobile .lesson-accordion-body {
+  padding: 0 18px 20px;
+}
+
+.course-accordion-mobile .lesson-accordion-body .panel-badge {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #A9B7A1;
+}
+
+.course-accordion-mobile .lesson-accordion-body .lesson-intro {
+  font-size: 0.95rem;
+  color: #2F312E;
+  margin-bottom: 12px;
+}
+
+.course-accordion-mobile .lesson-accordion-body .lesson-points {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.course-accordion-mobile .lesson-accordion-body .lesson-points li {
+  padding: 10px 14px;
+  background: rgba(233, 225, 215, 0.25);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #666B67;
+}
+
+.course-accordion-mobile .lesson-accordion-body .lesson-card {
+  margin-top: 12px;
+  padding: 14px 16px;
+  background: rgba(250, 248, 245, 0.8);
+  border-radius: 12px;
+  border: 1px solid rgba(169, 183, 161, 0.15);
+}
+
+.course-accordion-mobile .lesson-accordion-body .lesson-card h3 {
+  font-family: 'Manrope', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.course-accordion-mobile .lesson-accordion-body .lesson-card p {
+  font-size: 0.9rem;
+  color: #666B67;
+  margin: 0;
+}

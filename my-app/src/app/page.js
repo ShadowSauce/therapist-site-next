@@ -3,6 +3,28 @@ import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 
 export default function Home() {
+  // --- State for Hamburger Menu ---
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  // --- State for FAQ Accordion ---
+  const [activeFaq, setActiveFaq] = useState(null);
+  const answerRefs = useRef([]);
+
+  // --- FAQ data (replace with your actual questions/answers) ---
+  const faqData = [
+    {
+      question: 'Что такое ченнелинг и как он работает?',
+      answer: 'Ченнелинг — это процесс получения информации из более высоких источников. В своей работе я использую его для того, чтобы увидеть глубинные причины ваших ситуаций, которые не всегда видны на поверхностном уровне.'
+    },
+    {
+      question: 'Чем отличается психологическая консультация от сессии ченнелинга?',
+      answer: 'Психологическая консультация фокусируется на анализе поведения, мыслей и эмоций через призму психологии. Сессия ченнелинга добавляет энергетический и духовный аспекты, позволяя увидеть ситуацию с более широкой перспективы.'
+    },
+    {
+      question: 'Как проходит сессия по фотографии?',
+      answer: 'Вы отправляете мне свою фотографию. Я провожу энергетическое сканирование и анализ ситуации, а затем на сессии делюсь с вами результатами и рекомендациями. Длительность — 120 минут.'
+    }
+  ];
 
   // --- 1. Navbar scroll effect (exactly like landing.js) ---
   useEffect(() => {
@@ -17,7 +39,31 @@ export default function Home() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // --- 2. FAQ accordion max-height update (exactly like landing.js) ---
+  useEffect(() => {
+    answerRefs.current.forEach((el, index) => {
+      if (!el) return;
+      if (activeFaq === index) {
+        el.style.maxHeight = `${el.scrollHeight}px`;
+      } else {
+        el.style.maxHeight = null;
+      }
+    });
+  }, [activeFaq]);
 
+  // --- 3. Hamburger toggle & close functions ---
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  // --- 4. FAQ toggle handler ---
+  const toggleFaq = (index) => {
+    setActiveFaq(activeFaq === index ? null : index);
+  };
 
   return (
     <>
@@ -30,16 +76,28 @@ export default function Home() {
 
           <nav>
             <ul
-              className={"nav-links"}
+              className={`nav-links ${isMenuOpen ? 'active' : ''}`}
               id="navLinks"
             >
-              <li><a href="#services" >Услуги</a></li>
-              <li><a href="#about" >Обо мне</a></li>
-              <li><a href="#faq" >FAQ</a></li>
-              <li><a href="#contact" >Контакты</a></li>
-              <li><Link href="/course" >Курс</Link></li>
+              <li><a href="#services" onClick={closeMenu}>Услуги</a></li>
+              <li><a href="#about" onClick={closeMenu}>Обо мне</a></li>
+              <li><a href="#faq" onClick={closeMenu}>FAQ</a></li>
+              <li><a href="#contact" onClick={closeMenu}>Контакты</a></li>
+              <li><Link href="/course" onClick={closeMenu}>Курс</Link></li>
             </ul>
           </nav>
+
+          <button
+            className="hamburger"
+            id="hamburger"
+            aria-label="Open navigation menu"
+            aria-expanded={isMenuOpen}
+            onClick={toggleMenu}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </header>
 
@@ -152,6 +210,37 @@ export default function Home() {
                 fuga corrupti beatae eligendi exercitationem cum earum · Error recusandae a dolorum labore quos quae
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== FAQ (NEW – fully integrated) ========== */}
+      <section id="faq">
+        <div className="container">
+          <div className="section-intro">
+            <h2>Часто задаваемые вопросы</h2>
+          </div>
+          <div className="faq-list">
+            {faqData.map((item, idx) => (
+              <div
+                key={idx}
+                className={`faq-item ${activeFaq === idx ? 'active' : ''}`}
+              >
+                <button
+                  className="faq-question"
+                  onClick={() => toggleFaq(idx)}
+                  aria-expanded={activeFaq === idx}
+                >
+                  {item.question}
+                </button>
+                <div
+                  className="faq-answer"
+                  ref={(el) => (answerRefs.current[idx] = el)}
+                >
+                  <p>{item.answer}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>

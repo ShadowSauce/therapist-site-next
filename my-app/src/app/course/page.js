@@ -2,30 +2,47 @@
 
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
-import {courseData as lessons} from '../data/courseData.js';
-import '.././styles/course.css';
-import '.././styles/components/faq.css';
-import '.././styles/components/footer.css'; // optional
+import { courseData as lessons, courseFaq } from '../data/courseData.js';
 
-// --- Lesson data (exactly as in course.js) ---
-
+import '../styles/course.css';
+import '../styles/components/faq.css';
+// import '../styles/components/footer.css'; // optional
 
 export default function CoursePage() {
-  // --- State for navbar hamburger ---
+  // ─── Navbar state ───
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // --- State for active lesson ---
+  // ─── Desktop: active lesson state ───
   const [activeLessonId, setActiveLessonId] = useState(lessons[0].id);
 
-  // --- State for FAQ accordion (same pattern as before) ---
+  // ─── Mobile: expanded lesson state ───
+  const [expandedLesson, setExpandedLesson] = useState(null);
+
+  // ─── FAQ state ───
   const [activeFaqIndex, setActiveFaqIndex] = useState(null);
   const faqAnswerRefs = useRef([]);
 
-  // --- Toggle hamburger ---
+  // ─── Toggle functions ───
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
-  // --- Navbar scroll effect ---
+  const selectLesson = (id) => {
+    setActiveLessonId(id);
+  };
+
+  const toggleLesson = (id) => {
+    setExpandedLesson(expandedLesson === id ? null : id);
+  };
+
+  const toggleFaq = (index) => {
+    setActiveFaqIndex(activeFaqIndex === index ? null : index);
+  };
+
+  // ─── Get active lesson data for desktop ───
+  const activeLesson = lessons.find(l => l.id === activeLessonId) || lessons[0];
+  const pointsMarkup = activeLesson.points.map((point, i) => <li key={i}>{point}</li>);
+
+  // ─── Navbar scroll effect ───
   useEffect(() => {
     const navbar = document.getElementById('navbar');
     if (!navbar) return;
@@ -38,7 +55,7 @@ export default function CoursePage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // --- FAQ accordion max-height update ---
+  // ─── FAQ max-height update ───
   useEffect(() => {
     faqAnswerRefs.current.forEach((el, idx) => {
       if (!el) return;
@@ -50,20 +67,6 @@ export default function CoursePage() {
     });
   }, [activeFaqIndex]);
 
-  // --- FAQ toggle ---
-  const toggleFaq = (index) => {
-    setActiveFaqIndex(activeFaqIndex === index ? null : index);
-  };
-
-  // --- Render active lesson content ---
-  const activeLesson = lessons.find(l => l.id === activeLessonId) || lessons[0];
-  const pointsMarkup = activeLesson.points.map((point, i) => <li key={i}>{point}</li>);
-
-  // --- Lesson selection handler ---
-  const selectLesson = (id) => {
-    setActiveLessonId(id);
-  };
-
   return (
     <>
       {/* ========== NAVBAR ========== */}
@@ -72,16 +75,26 @@ export default function CoursePage() {
           <Link href="/" className="logo">Евгения Аль Ведьян</Link>
 
           <nav>
-            <ul className={"nav-links"} id="navLinks">
-              <li><a href="/#services" >Услуги</a></li>
-              <li><a href="/#about" >Обо мне</a></li>
-              <li><a href="/#faq" >FAQ</a></li>
-              <li><a href="/#contact" >Контакты</a></li>
-              <li><Link href="/course" >Курс</Link></li>
+            <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`} id="navLinks">
+              <li><a href="/#services" onClick={closeMenu}>Услуги</a></li>
+              <li><a href="/#about" onClick={closeMenu}>Обо мне</a></li>
+              <li><a href="/#faq" onClick={closeMenu}>FAQ</a></li>
+              <li><a href="/#contact" onClick={closeMenu}>Контакты</a></li>
+              <li><Link href="/course" onClick={closeMenu}>Курс</Link></li>
             </ul>
           </nav>
 
-          
+          <button
+            className="hamburger"
+            id="hamburger"
+            aria-label="Open navigation menu"
+            aria-expanded={isMenuOpen}
+            onClick={toggleMenu}
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </header>
 
@@ -128,85 +141,31 @@ export default function CoursePage() {
           </div>
 
           <div className="faq-container">
-            {/* FAQ items – we'll render them from the HTML as static, but with accordion logic */}
-            {/* You could also make them dynamic, but they are few, so I'll hardcode them */}
-            <div className={`faq-item ${activeFaqIndex === 0 ? 'active' : ''}`}>
-              <button className="faq-question" onClick={() => toggleFaq(0)}>
-                <span>Для кого этот курс</span>
-                <span className="faq-icon">+</span>
-              </button>
-              <div className="faq-answer" ref={(el) => (faqAnswerRefs.current[0] = el)}>
-                <div className="faq-answer-content">
-                  <p>
-                    Этот курс я создавала прежде всего для ченнелеров.<br /><br />
-                    Но постепенно поняла, что он оказывается полезен гораздо более широкому кругу специалистов.<br /><br />
-                    Он подойдет вам, если вы работаете с человеком через внутренние образы, чувства, медитативные техники, контакт с бессознательным или энергетические практики и хотите глубже понимать язык тела.<br />
-                    Возможно, вы:<br />
-                    • проводите сессии ченнелинга.<br />
-                    • используете медитативные техники в психологическом консультировании.<br />
-                    • работаете с подсознанием.<br />
-                    • занимаетесь регрессиями.<br />
-                    • проводите энергетические практики.<br />
-                    • сопровождаете людей в глубинных трансформациях.<br /><br />
-                    Во всех этих направлениях тело становится важной частью диалога с человеком.<br />
-                    И чем лучше специалист понимает этот язык, тем точнее становятся вопросы, спокойнее работа и глубже понимание происходящего
-                  </p>
+            {courseFaq.map((item, idx) => (
+              <div
+                key={idx}
+                className={`faq-item ${activeFaqIndex === idx ? 'active' : ''}`}
+              >
+                <button className="faq-question" onClick={() => toggleFaq(idx)}>
+                  <span>{item.question}</span>
+                  <span className="faq-icon">+</span>
+                </button>
+                <div
+                  className="faq-answer"
+                  ref={(el) => (faqAnswerRefs.current[idx] = el)}
+                >
+                  <div
+                    className="faq-answer-content"
+                    dangerouslySetInnerHTML={{ __html: item.answer }}
+                  />
                 </div>
               </div>
-            </div>
-
-            <div className={`faq-item ${activeFaqIndex === 1 ? 'active' : ''}`}>
-              <button className="faq-question" onClick={() => toggleFaq(1)}>
-                <span>Что вы получите</span>
-                <span className="faq-icon">+</span>
-              </button>
-              <div className="faq-answer" ref={(el) => (faqAnswerRefs.current[1] = el)}>
-                <div className="faq-answer-content">
-                  <p>
-                    После курса вы будете иначе смотреть на симптомы - не как на список диагнозов, а как на часть жизненной истории человека.<br /><br />
-                    Вы начнёте увереннее ориентироваться в психосоматических закономерностях разных органов и систем.<br /><br />
-                    Перестанете теряться, когда клиент называет диагноз, о котором раньше почти ничего не знали.<br /><br />
-                    Научитесь видеть различия между похожими заболеваниями, потому что за похожими симптомами нередко стоят совершенно разные внутренние конфликты.<br />
-                    Получите понятную структуру построения сессии:<br />
-                    с чего начать работу с клиентом,<br />
-                    какие вопросы помогают двигаться глубже,<br />
-                    в какой момент стоит остановиться,<br />
-                    а где важно направить человека к врачу.<br /><br />
-                    И, пожалуй, самое главное.<br />
-                    Интуиция никуда не исчезнет, <br />
-                    наоборот, она станет точнее.<br />
-                    Потому что рядом с ней появится ещё один инструмент — понимание языка тела.<br />
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className={`faq-item ${activeFaqIndex === 2 ? 'active' : ''}`}>
-              <button className="faq-question" onClick={() => toggleFaq(2)}>
-                <span>О чём этот курс</span>
-                <span className="faq-icon">+</span>
-              </button>
-              <div className="faq-answer" ref={(el) => (faqAnswerRefs.current[2] = el)}>
-                <div className="faq-answer-content">
-                  <p>
-                    Каждая лекция посвящена одной системе организма.<br /><br />
-                    Мы разбираем не только заболевания.<br /><br />
-                    Мы исследуем внутреннюю историю органа.<br /><br />
-                    Почему именно он оказывается вовлечён.<br /><br />
-                    Какие эмоциональные конфликты встречаются чаще всего.<br /><br />
-                    Как это проявляется в работе с клиентом.<br /><br />
-                    Какие вопросы помогают выйти к сути.<br /><br />
-                    Какие ошибки чаще всего совершают специалисты.<br /><br />
-                    Каждая тема сопровождается клиническими примерами, психологическими портретами, реальными случаями из практики и разбором методологии работы.
-                  </p>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* ========== COURSE SHELL (lessons sidebar + preview) ========== */}
+      {/* ========== COURSE SHELL (desktop: sidebar + preview) ========== */}
       <main className="course-shell container">
         <aside className="lesson-sidebar" aria-label="Список модулей курса">
           <div className="sidebar-title">Программа курса</div>
@@ -232,19 +191,49 @@ export default function CoursePage() {
             <h2>{activeLesson.title}</h2>
             {activeLesson.intro && <p>{activeLesson.intro}</p>}
             <ul className="lesson-points">{pointsMarkup}</ul>
-            {/* If you want to show cardTitle and cardText, uncomment: */}
-            {/* {activeLesson.cardTitle && (
-              <div className="lesson-card">
-                <h3>{activeLesson.cardTitle}</h3>
-                <p>{activeLesson.cardText}</p>
-              </div>
-            )} */}
           </div>
         </section>
       </main>
 
-      {/* Optional footer – you can copy the same footer from landing if desired */}
-      {/* <footer className="site-footer">...</footer> */}
+      {/* ========== MOBILE ACCORDION (hidden on desktop) ========== */}
+      <div className="course-accordion-mobile">
+        <h2 className="lessons-title">Программа курса</h2>
+        <div className="lesson-accordion">
+          {lessons.map((lesson) => {
+            const isExpanded = expandedLesson === lesson.id;
+            return (
+              <div key={lesson.id} className={`lesson-accordion-item ${isExpanded ? 'active' : ''}`}>
+                <button
+                  className="lesson-accordion-header"
+                  onClick={() => toggleLesson(lesson.id)}
+                  aria-expanded={isExpanded}
+                >
+                  <span className="lesson-number">{lesson.number}</span>
+                  <span className="lesson-title">{lesson.title}</span>
+                  <span className="lesson-accordion-icon">{isExpanded ? '−' : '+'}</span>
+                </button>
+                <div className="lesson-accordion-content">
+                  <div className="lesson-accordion-body">
+                    <div className="panel-badge">{lesson.badge}</div>
+                    {lesson.intro && <p className="lesson-intro">{lesson.intro}</p>}
+                    <ul className="lesson-points">
+                      {lesson.points.map((point, idx) => (
+                        <li key={idx}>{point}</li>
+                      ))}
+                    </ul>
+                    {lesson.cardTitle && (
+                      <div className="lesson-card">
+                        <h3>{lesson.cardTitle}</h3>
+                        <p>{lesson.cardText}</p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
     </>
   );
 }
