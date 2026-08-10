@@ -1,69 +1,220 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import { useEffect, useState, useRef } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
+
+  // --- 1. Navbar scroll effect (exactly like landing.js) ---
+  useEffect(() => {
+    const navbar = document.getElementById('navbar');
+    if (!navbar) return;
+
+    const handleScroll = () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+
+
   return (
-    <div className={styles.page}>
-      <main className={styles.main}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className={styles.intro}>
-          <h1>
-            To get started, edit the{" "}
-            <code className={styles.code}>page.js</code> file.
-          </h1>
-          <p>
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
+    <>
+      {/* ========== NAVIGATION ========== */}
+      <header className="navbar" id="navbar">
+        <div className="nav-wrapper">
+          <h3 className="logo">
+            <Link href="/">Евгения Аль Ведьян</Link>
+          </h3>
+
+          <nav>
+            <ul
+              className={"nav-links"}
+              id="navLinks"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <li><a href="#services" >Услуги</a></li>
+              <li><a href="#about" >Обо мне</a></li>
+              <li><a href="#faq" >FAQ</a></li>
+              <li><a href="#contact" >Контакты</a></li>
+              <li><Link href="/course" >Курс</Link></li>
+            </ul>
+          </nav>
         </div>
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className={styles.secondary}
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </header>
+
+      {/* ========== HERO ========== */}
+      <section className="hero">
+        <div className="container hero-grid">
+          <div className="hero-text">
+            <div className="hero-heading">
+              <div className="hero-support">
+                Ченнелер · психолог · психосоматолог
+              </div>
+              <h1>Евгения<br />Аль Ведьян</h1>
+            </div>
+            <p>
+              Помогаю понять истинную причину проблемы и найти путь к её решению.
+              Работаю на стыке ченнелинга, психологии и психосоматики — с
+              отношениями, тревогой, психосоматическими симптомами и жизненными
+              тупиками.
+            </p>
+          </div>
+
+          <div className="hero-image">
+            <img src="/hero_1.jpg" alt="Therapist portrait" />
+            <div className="hero-overlay">
+              <div className="hero-support">
+                Ченнелер · психолог · психосоматолог
+              </div>
+              <h1>Евгения<br />Аль Ведьян</h1>
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* ========== SERVICES ========== */}
+      <section id="services">
+        <div className="container">
+          <div className="section-intro">
+            <h2>Услуги</h2>
+          </div>
+          <div className="services-grid">
+            <div className="service-card">
+              <h3>Онлайн - сессия ченнелинга</h3>
+              <p className="service-desc">
+                Глубокое исследование вашей ситуации через ченнелинг, психологию и психосоматику. Поиск причин, ответов и новых решений.
+              </p>
+              <div className="service-meta">
+                до 120 минут  ·  онлайн
+              </div>
+              <Link href="/services?service=individual" className="book-btn">Подробнее</Link>
+            </div>
+
+            <article className="service-card">
+              <h3>Дистанционная сессия ченнелинга по фотографии</h3>
+              <p className="service-desc">Исследование энергетического состояния человека и ситуации по фотографии с последующим разбором и рекомендациями.</p>
+              <div className="service-meta">
+                120 минут  ·  онлайн
+              </div>
+              <Link href="/services?service=channeling" className="book-btn">Подробнее</Link>
+            </article>
+
+            <article className="service-card">
+              <h3>Психологическая консультация</h3>
+              <p className="service-desc">Помогаю разобраться в сложных жизненных ситуациях, понять причины повторяющихся сценариев и найти внутреннюю опору.</p>
+              <div className="service-meta">
+                60 минут  ·  онлайн
+              </div>
+              <Link href="/services?service=stress" className="book-btn">Подробнее</Link>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== COURSE ========== */}
+      <section id="course">
+        <div className="container">
+          <div className="course-wrapper">
+            <div className="course-grid">
+              <div className="img-placeholder">
+                {/* Add image if needed */}
+              </div>
+              <div className="course-content">
+                <h2>ТЕЛО ГОВОРИТ</h2>
+                <p>
+                  Курс по психосоматике для специалистов, работающих с глубинными состояниями человека
+                </p>
+                <Link href="/course" className="course-button">Подробнее</Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== ABOUT ========== */}
+      <section id="about">
+        <div className="container about-grid">
+          <div className="about-image">
+            <img src="/about_me.jpg" alt="Therapist in calming environment" />
+          </div>
+          <div className="about-content">
+            <h2>Обо мне</h2>
+            <p>
+              Я психолог, психосоматолог и практик ченнелинга.
+              Я помогаю людям лучше понять себя и увидеть то, что часто остается незамеченным за тревогой, повторяющимися жизненными ситуациями или сложными отношениями. В своей работе я соединяю психологию, психосоматику и ченнелинг. Для меня это не три разных метода, а один путь, который помогает увидеть историю человека целиком, найти глубинные причины происходящего и постепенно прийти к тем изменениям, которых не удавалось достичь раньше.
+            </p>
+            <div className="credentials">
+              <h4>Lorem ipsum dolor sit amet consectetur</h4>
+              <p>
+                Lorem ipsum dolor sit amet consectetur · 
+                Lorem ipsum dolor sit amet consectetur adipisicing elit  ·
+                fuga corrupti beatae eligendi exercitationem cum earum · Error recusandae a dolorum labore quos quae
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== CONTACT ========== */}
+      <section id="contact">
+        <div className="container">
+          <div className="section-intro">
+            <h2>Контакты</h2>
+            <p>Свяжитесь напрямую для записи на консультацию.</p>
+          </div>
+          <div className="contact-grid">
+            <div className="contact-card">
+              <div className="contact-details">
+                <div className="contact-item">
+                  <h4>Email</h4>
+                  <p>e.alwedian2016@yandex.ru</p>
+                </div>
+                <div className="contact-item">
+                  <h4>Phone</h4>
+                  <p>+9 (876) 453 32 10</p>
+                </div>
+                <div className="contact-item">
+                  <h4>Social?</h4>
+                  <div className="social-links">
+                    <a href="#">Instagram</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="#">Facebook</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="contact-card">
+              <form className="contact-form">
+                <input
+                  type="text"
+                  placeholder="Your Name"
+                  aria-label="Your Name"
+                />
+                <input
+                  type="email"
+                  placeholder="Email Address"
+                  aria-label="Email Address"
+                />
+                <textarea
+                  placeholder="Message"
+                  aria-label="Message"
+                ></textarea>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========== FOOTER ========== */}
+      <footer className="site-footer">
+        <div className="container">
+          <p>Иногда ответ находится гораздо ближе, чем кажется.
+            Нужно лишь посмотреть на свою историю немного иначе.
+            Если вы чувствуете, что пришло время разобраться в том, что происходит в вашей жизни, — я буду рада пройти этот путь вместе с вами.</p>
+          <p>Я не разделяю человека на психику, тело и духовный опыт. Поэтому в своей работе соединяю психологию, психосоматику и, при необходимости, ченнелинг. Не как три отдельных метода, а как разные способы увидеть одну историю целиком.</p>
+        </div>
+      </footer>
+    </>
   );
 }

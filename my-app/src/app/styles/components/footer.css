@@ -1,0 +1,59 @@
+
+.faq-container {
+    margin-top: 48px;
+}
+
+.faq-container .sub {
+    margin-bottom: 28px;
+}
+.site-footer {
+position: relative;
+left: 50%;
+right: 50%;
+margin-left: -50vw;
+margin-right: -50vw;
+width: 100vw;
+padding: 32px 6%;
+background: rgba(233, 225, 215, 0.45);
+color: #2F312E;
+text-align: left;
+box-sizing: border-box;
+}
+
+.site-footer .container {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+gap: 16px;
+max-width: 100%;
+}
+
+.site-footer p {
+margin: 0;
+font-size: 1.3rem;
+max-width: 100%;
+}
+
+.footer-links {
+display: flex;
+flex-wrap: wrap;
+gap: 16px;
+justify-content: center;
+}
+
+.footer-links a {
+color: #FAF8F5;
+text-decoration: none;
+font-weight: 500;
+}
+
+.footer-links a:hover {
+text-decoration: underline;
+}
+
+@media (max-width: 680px) {
+.site-footer .container {
+    flex-direction: column;
+    text-align: center;
+}
+}
