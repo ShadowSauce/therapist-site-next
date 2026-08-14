@@ -294,7 +294,6 @@
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  text-decoration: underline;
 }
 
 .course-page-wrapper .lesson-panel h2 {
@@ -510,7 +509,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #A9B7A1;
+  color: black;
 }
 
 .course-page-wrapper .course-accordion-mobile .lesson-accordion-body .lesson-intro {

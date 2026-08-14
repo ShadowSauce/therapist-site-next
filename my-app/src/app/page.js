@@ -189,15 +189,15 @@ export default function Home() {
             <div className="contact-card">
               <div className="contact-details">
                 <div className="contact-item">
-                  <h4>Email</h4>
+                  <h4>Электронная почта</h4>
                   <p>e.alwedian2016@yandex.ru</p>
                 </div>
                 <div className="contact-item">
-                  <h4>Phone</h4>
+                  <h4>Телефон</h4>
                   <p>+9 (876) 453 32 10</p>
                 </div>
                 <div className="contact-item">
-                  <h4>Social?</h4>
+                  <h4>социальные сети</h4>
                   <div className="social-links">
                     <a href="#">Instagram</a>
                     <a href="#">LinkedIn</a>
@@ -205,24 +205,6 @@ export default function Home() {
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="contact-card">
-              <form className="contact-form">
-                <input
-                  type="text"
-                  placeholder="Your Name"
-                  aria-label="Your Name"
-                />
-                <input
-                  type="email"
-                  placeholder="Email Address"
-                  aria-label="Email Address"
-                />
-                <textarea
-                  placeholder="Message"
-                  aria-label="Message"
-                ></textarea>
-              </form>
             </div>
           </div>
         </div>
