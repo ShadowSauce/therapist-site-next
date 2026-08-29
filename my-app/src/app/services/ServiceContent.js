@@ -107,7 +107,9 @@ export default function ServiceContent() {
           dangerouslySetInnerHTML={{ __html: serviceData.desc }}
         />
 
-        <Link href="/#contact" className="book-cta">Записаться на консультацию</Link>
+        <Link href="/#contact" className="book-cta">
+          {serviceKey === 'professional' ? 'Стать участником Студии' : 'Записаться на консультацию'}
+        </Link>
 
         {/* ========== FAQ ========== */}
         <div className="faq-container">

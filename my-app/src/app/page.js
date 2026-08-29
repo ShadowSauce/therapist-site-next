@@ -45,7 +45,7 @@ export default function Home() {
             >
               <li><a href="#services" onClick={closeMenu}>Услуги</a></li>
               <li><a href="#about" onClick={closeMenu}>Обо мне</a></li>
-              <li><a href="#faq" onClick={closeMenu}>FAQ</a></li>
+              <li><a href="#faq" onClick={closeMenu}>Вебинары</a></li>
               <li><a href="#contact" onClick={closeMenu}>Контакты</a></li>
               <li><Link href="/course" onClick={closeMenu}>Курс</Link></li>
             </ul>
@@ -113,23 +113,34 @@ export default function Home() {
               <Link href="/services?service=individual" className="book-btn">Подробнее</Link>
             </div>
 
-            <article className="service-card">
+            <div className="service-card">
               <h3>Дистанционная сессия ченнелинга по фотографии</h3>
               <p className="service-desc">Исследование энергетического состояния человека и ситуации по фотографии с последующим разбором и рекомендациями.</p>
               <div className="service-meta">
                 120 минут  ·  онлайн
               </div>
               <Link href="/services?service=channeling" className="book-btn">Подробнее</Link>
-            </article>
+            </div>
 
-            <article className="service-card">
+            <div className="service-card">
               <h3>Психологическая консультация</h3>
               <p className="service-desc">Помогаю разобраться в сложных жизненных ситуациях, понять причины повторяющихся сценариев и найти внутреннюю опору.</p>
               <div className="service-meta">
                 60 минут  ·  онлайн
               </div>
-              <Link href="/services?service=stress" className="book-btn">Подробнее</Link>
-            </article>
+              <Link href="/services?service=psychological" className="book-btn">Подробнее</Link>
+            </div>
+
+            <div className="service-card">
+              <h3>Мастерская профессионального ченнелинга</h3>
+              <p className="service-desc">
+                Практика на реальных кейсах, разбор образов и гипотез, глубинная работа и обратная связь.
+              </p>
+              <div className="service-meta">
+                до 120 минут  ·  онлайн
+              </div>
+              <Link href="/services?service=professional" className="book-btn">Подробнее</Link>
+            </div>
           </div>
         </div>
       </section>

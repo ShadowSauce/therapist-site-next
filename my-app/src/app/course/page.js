@@ -80,7 +80,7 @@ export default function CoursePage() {
             <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`} id="navLinks">
               <li><a href="/#services" onClick={closeMenu}>Услуги</a></li>
               <li><a href="/#about" onClick={closeMenu}>Обо мне</a></li>
-              <li><a href="/#faq" onClick={closeMenu}>FAQ</a></li>
+              {/* <li><a href="/#faq" onClick={closeMenu}>FAQ</a></li> */}
               <li><a href="/#contact" onClick={closeMenu}>Контакты</a></li>
               <li><Link href="/course" onClick={closeMenu}>Курс</Link></li>
             </ul>
@@ -106,7 +106,7 @@ export default function CoursePage() {
           <Link href="/#course" className="back-link">← На главную</Link>
 
           <div className="course-hero-copy">
-            <p className="hero-support">Онлайн-курс</p>
+            <p>Онлайн-курс</p>
             <h1>ТЕЛО ГОВОРИТ</h1>
             
             <p className="hero-lead">Курс по психосоматике для специалистов, работающих с глубинными состояниями человека.</p>
@@ -139,7 +139,7 @@ export default function CoursePage() {
         <div className="container">
           <div className="section-intro">
             <h2>Часто задаваемые вопросы</h2>
-            <p>Ответы на основные вопросы перед началом терапии.</p>
+            <p>Ответы на основные вопросы перед началом курса.</p>
           </div>
 
           <div className="faq-container">
