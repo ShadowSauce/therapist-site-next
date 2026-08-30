@@ -172,7 +172,7 @@ export default function Home() {
             <img src="/about_me.jpg" alt="Therapist in calming environment" />
           </div>
           <div className="about-content">
-            <h2>Обо мне</h2>
+            <h2>Обо Мне</h2>
             <p>
               Я психолог, психосоматолог и практик ченнелинга.
               Я помогаю людям лучше понять себя и увидеть то, что часто остается незамеченным за тревогой, повторяющимися жизненными ситуациями или сложными отношениями. В своей работе я соединяю психологию, психосоматику и ченнелинг. Для меня это не три разных метода, а один путь, который помогает увидеть историю человека целиком, найти глубинные причины происходящего и постепенно прийти к тем изменениям, которых не удавалось достичь раньше.
@@ -201,11 +201,11 @@ export default function Home() {
               <div className="contact-details">
                 <div className="contact-item">
                   <h4>Электронная почта</h4>
-                  <p>e.alwedian2016@yandex.ru</p>
+                  <p>evgeniaalvedyan@yandex.ru</p>
                 </div>
                 <div className="contact-item">
                   <h4>Телефон</h4>
-                  <p>+9 (876) 453 32 10</p>
+                  <p>+7 (916) 500 78 93</p>
                 </div>
                 <div className="contact-item">
                   <h4>социальные сети</h4>
