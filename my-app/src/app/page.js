@@ -202,11 +202,11 @@ export default function Home() {
               <div className="contact-details">
                 <div className="contact-item">
                   <h4>Электронная почта</h4>
-                  <p>e.alwedian2016@yandex.ru</p>
+                  <p>evgeniaalvedyan@yandex.ru</p>
                 </div>
                 <div className="contact-item">
                   <h4>Телефон</h4>
-                  <p>+9 (876) 453 32 10</p>
+                  <p>+7 (916) 500 78 93</p>
                 </div>
                 <div className="contact-item">
                   <h4>социальные сети</h4>
