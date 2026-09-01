@@ -1,16 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-body {
-    font-family: 'Manrope', sans-serif;
-    background: #FAF8F5;
-    color: #2F312E;
-    line-height: 1.7;
-    padding: 40px 6% 0;
-    margin-bottom: 0;
-}
+
 .services-page{
     padding-top: 72px;
 }

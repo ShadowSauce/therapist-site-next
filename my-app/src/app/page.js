@@ -151,7 +151,8 @@ export default function Home() {
           <div className="course-wrapper">
             <div className="course-grid">
               <div className="img-placeholder">
-                {/* Add image if needed */}
+              <img src="/course_img.jpg" alt="Course Image body talks"/>
+                
               </div>
               <div className="course-content">
                 <h2>ТЕЛО ГОВОРИТ</h2>

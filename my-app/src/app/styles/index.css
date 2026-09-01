@@ -167,31 +167,6 @@ align-items: center;
 overflow: hidden;
 }
 
-.hero::before,
-.hero::after {
-content: '';
-position: absolute;
-border-radius: 50%;
-filter: blur(10px);
-z-index: 0;
-}
-
-.hero::before {
-width: 420px;
-height: 420px;
-background: rgba(169,183,161,0.16);
-top: -120px;
-right: -120px;
-}
-
-.hero::after {
-width: 320px;
-height: 320px;
-background: rgba(170,184,200,0.18);
-bottom: -100px;
-left: -100px;
-}
-
 .hero-grid {
 position: relative;
 z-index: 2;
