@@ -1,4 +1,5 @@
-// pages/api/payment/webhook.js
+import { NextResponse } from 'next/server';
+
 //
 // YooKassa calls this URL when a payment's status changes.
 // Register this URL in your YooKassa dashboard under Settings -> HTTP notifications,
@@ -7,20 +8,15 @@
 // IMPORTANT: never trust the webhook body's status by itself — anyone can POST
 // a fake payload here. Always re-fetch the payment from YooKassa's API to confirm.
 
-const { getPayment } = require("../../../lib/yookassa");
+const { getPayment } = require('../../../lib/yookassa');
 
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
-    return res.status(405).end();
-  }
-
+export async function POST(request) {
   try {
-    const event = req.body;
+    const event = await request.json();
     const paymentId = event?.object?.id;
 
     if (!paymentId) {
-      return res.status(400).json({ error: "No payment id in notification" });
+      return NextResponse.json({ error: 'No payment id in notification' }, { status: 400 });
     }
 
     // Confirm the real status directly from YooKassa, don't trust the payload alone
@@ -40,11 +36,11 @@ export default async function handler(req, res) {
     // since capture: true is set on creation.
 
     // YooKassa just needs a 200 response to know the notification was received
-    return res.status(200).end();
+    return new NextResponse(null, { status: 200 });
   } catch (err) {
-    console.error("Webhook handling failed:", err);
+    console.error('Webhook handling failed:', err);
     // Still return 200 so YooKassa doesn't hammer retries while you debug,
     // OR return 500 during initial testing so you notice failures. Your call.
-    return res.status(500).json({ error: "Webhook processing failed" });
+    return NextResponse.json({ error: 'Webhook processing failed' }, { status: 500 });
   }
 }

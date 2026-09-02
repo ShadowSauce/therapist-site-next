@@ -5,9 +5,7 @@ import './styles/components/footer.css';
 export const metadata = {
   title: 'Евгения Аль Ведьян',
   description: 'Ченнелер · психолог · психосоматолог',
-  icons: {
-    icon: '/icon.jpg',
-  },
+  icons: '/icon.jpg'
 };
 
 export default function RootLayout({ children }) {

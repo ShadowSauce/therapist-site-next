@@ -1,7 +1,8 @@
-// components/BookingPayButton.js
+"use client";
+
 import { useState } from "react";
 
-export default function BookingPayButton({ bookingId, amount, description }) {
+export default function BookingPayButton({ bookingId, amount, description, paymentMethod }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -13,7 +14,7 @@ export default function BookingPayButton({ bookingId, amount, description }) {
       const res = await fetch("/api/payment/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ bookingId, amount, description }),
+        body: JSON.stringify({ bookingId, amount, description, paymentMethod }),
       });
 
       const data = await res.json();
@@ -32,7 +33,7 @@ export default function BookingPayButton({ bookingId, amount, description }) {
 
   return (
     <div>
-      <button onClick={handlePay} disabled={loading} style={styles.button}>
+      <button type="button" onClick={handlePay} disabled={loading} style={styles.button}>
         {loading ? "Переход к оплате..." : `Оплатить ${amount} ₽`}
       </button>
       {error && <p style={styles.error}>{error}</p>}
