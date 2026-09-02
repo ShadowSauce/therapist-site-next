@@ -99,6 +99,7 @@ export default function ServiceContent() {
         <div className="meta-row">
           <div className="item"><span>Длительность:</span> <strong id="duration">{serviceData.duration}</strong></div>
           <div className="item"><span>Формат:</span> <strong id="format">{serviceData.format}</strong></div>
+          <div className="item"><span>Price:</span> <strong id="price">{serviceData.price}</strong></div>
         </div>
 
         <div
@@ -107,7 +108,10 @@ export default function ServiceContent() {
           dangerouslySetInnerHTML={{ __html: serviceData.desc }}
         />
 
-        <Link href="/#contact" className="book-cta">
+        <Link
+          href={`/book?service=${serviceKey}`}
+          className="book-cta"
+        >
           {serviceKey === 'professional' ? 'Стать участником Студии' : 'Записаться на консультацию'}
         </Link>
 

@@ -1,85 +1,95 @@
-
-.services-page{
-    padding-top: 72px;
+.services-page {
+  padding-top: 72px;
 }
 
 .services-page .container {
-    max-width: 820px;
-    margin: 0 auto;
+  max-width: 820px;
+  margin: 0 auto;
 }
+
 .services-page .back-link {
-    display: inline-block;
-    margin-bottom: 32px;
-    color: #666B67;
-    text-decoration: none;
-    font-size: 0.95rem;
+  display: inline-block;
+  margin-bottom: 32px;
+  color: #666B67;
+  text-decoration: none;
+  font-size: 0.95rem;
 }
-.back-link:hover {
-    color: #2F312E;
+
+.services-page .back-link:hover {
+  color: #2F312E;
 }
-.badge {
-    display: inline-block;
-    background: rgba(169, 183, 161, 0.18);
-    color: #A9B7A1;
-    font-weight: 500;
-    font-size: 0.85rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 6px 18px;
-    border-radius: 999px;
-    margin-bottom: 20px;
+
+.services-page .badge {
+  display: inline-block;
+  background: rgba(169, 183, 161, 0.18);
+  color: #A9B7A1;
+  font-weight: 500;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 6px 18px;
+  border-radius: 999px;
+  margin-bottom: 20px;
 }
-h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 500;
-    margin-bottom: 16px;
+
+.services-page h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 500;
+  margin-bottom: 16px;
 }
+
 .services-page .meta-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px 40px;
-    padding: 16px 0 24px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    margin-bottom: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+  padding: 16px 0 24px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  margin-bottom: 28px;
 }
-.meta-row .item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: #666B67;
-    font-size: 0.98rem;
+
+.services-page .meta-row .item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #666B67;
+  font-size: 0.98rem;
 }
-.meta-row .item strong {
-    color: #2F312E;
-    font-weight: 500;
+
+.services-page .meta-row .item strong {
+  color: #2F312E;
+  font-weight: 500;
 }
-.description p {
-    font-size: 1.1rem;
-    color: #2F312E;
-    margin-bottom: 18px;
+
+.services-page .description p {
+  font-size: 1.1rem;
+  color: #2F312E;
+  margin-bottom: 18px;
 }
-.description .highlight {
-    color: #A9B7A1;
-    font-weight: 500;
+
+.services-page .description .highlight {
+  color: #A9B7A1;
+  font-weight: 500;
 }
-.book-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 16px 40px;
-    background: #2F312E;
-    color: #ffffff;
-    border: none;
-    border-radius: 999px;
-    font-weight: 500;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.3s ease;
-    margin: 32px 0;
-    text-decoration: none;
+
+.services-page .book-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 40px;
+  background: #2F312E;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin: 32px 0;
+  text-decoration: none;
 }
-.book-cta:hover {
-    transform: translateY(-2px);
-    opacity: 0.92;
+
+.services-page .book-cta:hover {
+  transform: translateY(-2px);
+  opacity: 0.92;
 }

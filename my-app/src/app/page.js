@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
+import { servicesData } from './data/servicesData.js';
 
 export default function Home() {
   // --- State for Hamburger Menu ---
@@ -102,45 +103,16 @@ export default function Home() {
             <h2>Услуги</h2>
           </div>
           <div className="services-grid">
-            <div className="service-card">
-              <h3>Онлайн - сессия ченнелинга</h3>
-              <p className="service-desc">
-                Глубокое исследование вашей ситуации через ченнелинг, психологию и психосоматику. Поиск причин, ответов и новых решений.
-              </p>
-              <div className="service-meta">
-                до 120 минут  ·  онлайн
+            {Object.entries(servicesData).map(([serviceKey, service]) => (
+              <div className="service-card" key={serviceKey}>
+                <h3>{service.title}</h3>
+                <p className="service-desc">{service.small_des}</p>
+                <div className="service-meta">
+                  {service.duration}  ·  {service.format}
+                </div>
+                <Link href={`/services?service=${serviceKey}`} className="book-btn">Подробнее</Link>
               </div>
-              <Link href="/services?service=individual" className="book-btn">Подробнее</Link>
-            </div>
-
-            <div className="service-card">
-              <h3>Дистанционная сессия ченнелинга по фотографии</h3>
-              <p className="service-desc">Исследование энергетического состояния человека и ситуации по фотографии с последующим разбором и рекомендациями.</p>
-              <div className="service-meta">
-                120 минут  ·  онлайн
-              </div>
-              <Link href="/services?service=channeling" className="book-btn">Подробнее</Link>
-            </div>
-
-            <div className="service-card">
-              <h3>Психологическая консультация</h3>
-              <p className="service-desc">Помогаю разобраться в сложных жизненных ситуациях, понять причины повторяющихся сценариев и найти внутреннюю опору.</p>
-              <div className="service-meta">
-                60 минут  ·  онлайн
-              </div>
-              <Link href="/services?service=psychological" className="book-btn">Подробнее</Link>
-            </div>
-
-            <div className="service-card">
-              <h3>Мастерская профессионального ченнелинга</h3>
-              <p className="service-desc">
-                Практика на реальных кейсах, разбор образов и гипотез, глубинная работа и обратная связь.
-              </p>
-              <div className="service-meta">
-                до 120 минут  ·  онлайн
-              </div>
-              <Link href="/services?service=professional" className="book-btn">Подробнее</Link>
-            </div>
+            ))}
           </div>
         </div>
       </section>

@@ -5,12 +5,17 @@ import './styles/components/footer.css';
 export const metadata = {
   title: 'Евгения Аль Ведьян',
   description: 'Ченнелер · психолог · психосоматолог',
+  icons: {
+    icon: '/icon.jpg',
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="ru">
       <head>
+        <link rel="icon" href="/icon.jpg" type="image/jpeg" />
+        <link rel="shortcut icon" href="/icon.jpg" type="image/jpeg" />
         {/* Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
