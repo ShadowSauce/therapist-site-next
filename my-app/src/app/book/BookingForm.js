@@ -45,8 +45,8 @@ export default function BookingForm() {
   const paymentMethods = [
     { value: 'card', label: 'Банковская карта (Visa/Mastercard/MIR)' },
     { value: 'sbp', label: 'СБП (по QR-коду)' },
-    { value: 'apple_pay', label: 'Apple Pay' },
-    { value: 'google_pay', label: 'Google Pay' },
+    { value: 'pay1', label: 'pay1' },
+    { value: 'pay2', label: 'pay2' },
   ];
 
   const handleSubmit = async (e) => {
