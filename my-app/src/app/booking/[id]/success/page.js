@@ -1,94 +1,30 @@
 // src/app/booking/[id]/success/page.js
 "use client";
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import '../../../styles/success.css';
 
 export default function BookingSuccessPage() {
   const params = useParams();
   const bookingId = params?.id || 'вашей записи';
-  const [countdown, setCountdown] = useState(5);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          window.location.href = '/';
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      minHeight: '100vh',
-      padding: '20px',
-      textAlign: 'center',
-      background: '#FAF8F5',
-    }}>
-      <div style={{
-        maxWidth: '500px',
-        background: '#ffffff',
-        padding: '40px',
-        borderRadius: '20px',
-        boxShadow: '0 10px 30px rgba(0,0,0,0.04)',
-      }}>
-        <h1 style={{
-          fontFamily: "'Playfair Display', serif",
-          fontSize: '2rem',
-          marginBottom: '16px',
-        }}>
-          ✅ Оплата прошла успешно!
-        </h1>
-        <p style={{
-          fontSize: '1.1rem',
-          color: '#666B67',
-          marginBottom: '8px',
-        }}>
-          Бронь №{bookingId} подтверждена.
+    <main className="success-page">
+      <section className="success-card" aria-labelledby="success-title">
+        <div className="success-mark" aria-hidden="true">✓</div>
+        <p className="success-eyebrow">Оплата успешно прошла</p>
+        <h1 className="success-title" id="success-title">Оплата подтверждена</h1>
+        <p className="success-booking">
+          Номер заявки: <strong>{bookingId}</strong>
         </p>
-        <p style={{
-          fontSize: '1rem',
-          color: '#666B67',
-          marginBottom: '24px',
-        }}>
-          Мы отправили подтверждение на вашу почту и свяжемся с вами в ближайшее время.
+        <p className="success-note">
+          Чек об оплате отправлен на вашу электронную почту. Мы свяжемся с вами в ближайшее время, чтобы согласовать детали консультации.
         </p>
-        <Link
-          href="/"
-          style={{
-            display: 'inline-block',
-            padding: '12px 32px',
-            background: '#A9B7A1',
-            color: '#ffffff',
-            borderRadius: '30px',
-            textDecoration: 'none',
-            fontWeight: '600',
-            transition: '0.3s ease',
-          }}
-          onMouseEnter={(e) => e.target.style.background = '#8FA68A'}
-          onMouseLeave={(e) => e.target.style.background = '#A9B7A1'}
-        >
+        <Link href="/" className="success-home-link">
           Вернуться на главную
         </Link>
-        <p style={{
-          fontSize: '0.9rem',
-          color: '#999',
-          marginTop: '16px',
-        }}>
-          Перенаправление через {countdown} сек...
-        </p>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

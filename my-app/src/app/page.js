@@ -1,70 +1,12 @@
 "use client";
-import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { servicesData } from './data/servicesData.js';
+import Navbar from './components/Navbar';
 
 export default function Home() {
-  // --- State for Hamburger Menu ---
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-
-  // --- 1. Navbar scroll effect (exactly like landing.js) ---
-  useEffect(() => {
-    const navbar = document.getElementById('navbar');
-    if (!navbar) return;
-
-    const handleScroll = () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 20);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // --- 2. Hamburger toggle & close functions ---
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-  };
-
   return (
     <>
-      {/* ========== NAVIGATION ========== */}
-      <header className="navbar" id="navbar">
-        <div className="nav-wrapper">
-          <h3 className="logo">
-            <Link href="/">Евгения Аль Ведьян</Link>
-          </h3>
-
-          <nav>
-            <ul
-              className={`nav-links ${isMenuOpen ? 'active' : ''}`}
-              id="navLinks"
-            >
-              <li><a href="#services" onClick={closeMenu}>Услуги</a></li>
-              <li><a href="#about" onClick={closeMenu}>Обо мне</a></li>
-              <li><a href="#faq" onClick={closeMenu}>Вебинары</a></li>
-              <li><a href="#contact" onClick={closeMenu}>Контакты</a></li>
-              <li><Link href="/course" onClick={closeMenu}>Курс</Link></li>
-            </ul>
-          </nav>
-
-          <button
-            className="hamburger"
-            id="hamburger"
-            aria-label="Open navigation menu"
-            aria-expanded={isMenuOpen}
-            onClick={toggleMenu}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-      </header>
+      <Navbar />
 
       {/* ========== HERO ========== */}
       <section className="hero">
@@ -108,7 +50,7 @@ export default function Home() {
                 <h3>{service.title}</h3>
                 <p className="service-desc">{service.small_des}</p>
                 <div className="service-meta">
-                  {service.duration}  ·  {service.format}
+                  до {service.duration}  ·  {service.format}
                 </div>
                 <Link href={`/services?service=${serviceKey}`} className="book-btn">Подробнее</Link>
               </div>

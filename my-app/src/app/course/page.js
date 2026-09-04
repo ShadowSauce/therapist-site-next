@@ -3,15 +3,13 @@
 import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { courseData as lessons, courseFaq } from '../data/courseData.js';
+import Navbar from '../components/Navbar';
 
 import '../styles/course.css';
 import '../styles/components/faq.css';
 // import '../styles/components/footer.css'; // optional
 
 export default function CoursePage() {
-  // ─── Navbar state ───
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   // ─── Desktop: active lesson state ───
   const [activeLessonId, setActiveLessonId] = useState(lessons[0].id);
 
@@ -21,10 +19,6 @@ export default function CoursePage() {
   // ─── FAQ state ───
   const [activeFaqIndex, setActiveFaqIndex] = useState(null);
   const faqAnswerRefs = useRef([]);
-
-  // ─── Toggle functions ───
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const closeMenu = () => setIsMenuOpen(false);
 
   const selectLesson = (id) => {
     setActiveLessonId(id);
@@ -42,19 +36,6 @@ export default function CoursePage() {
   const activeLesson = lessons.find(l => l.id === activeLessonId) || lessons[0];
   const pointsMarkup = activeLesson.points.map((point, i) => <li key={i}>{point}</li>);
 
-  // ─── Navbar scroll effect ───
-  useEffect(() => {
-    const navbar = document.getElementById('navbar');
-    if (!navbar) return;
-
-    const handleScroll = () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 20);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   // ─── FAQ max-height update ───
   useEffect(() => {
     faqAnswerRefs.current.forEach((el, idx) => {
@@ -71,34 +52,7 @@ export default function CoursePage() {
     <>
     <div className="course-page-wrapper">
       
-      {/* ========== NAVBAR ========== */}
-      <header className="navbar course-navbar" id="navbar">
-        <div className="nav-wrapper">
-          <Link href="/" className="logo">Евгения Аль Ведьян</Link>
-
-          <nav>
-            <ul className={`nav-links ${isMenuOpen ? 'active' : ''}`} id="navLinks">
-              <li><a href="/#services" onClick={closeMenu}>Услуги</a></li>
-              <li><a href="/#about" onClick={closeMenu}>Обо мне</a></li>
-              {/* <li><a href="/#faq" onClick={closeMenu}>FAQ</a></li> */}
-              <li><a href="/#contact" onClick={closeMenu}>Контакты</a></li>
-              <li><Link href="/course" onClick={closeMenu}>Курс</Link></li>
-            </ul>
-          </nav>
-
-          <button
-            className="hamburger"
-            id="hamburger"
-            aria-label="Open navigation menu"
-            aria-expanded={isMenuOpen}
-            onClick={toggleMenu}
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-      </header>
+      <Navbar className="course-navbar" />
 
       {/* ========== COURSE HEADER ========== */}
       <header className="course-header">

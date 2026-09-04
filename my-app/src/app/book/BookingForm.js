@@ -1,16 +1,11 @@
 "use client";
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { createClient } from '@supabase/supabase-js';
 import { servicesData } from '../data/servicesData.js';
+import Navbar from '../components/Navbar';
 import '../styles/book.css';
-
-
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
 
 const services = Object.entries(servicesData).map(([value, service]) => ({
   value,
@@ -37,9 +32,32 @@ export default function BookingForm() {
   const [error, setError] = useState(null);
   const [selectedServiceType, setSelectedServiceType] = useState(initialServiceType);
   const [serviceMenuOpen, setServiceMenuOpen] = useState(false);
+  const serviceDropdownRef = useRef(null);
 
   const service = services.find(({ value }) => value === selectedServiceType) || services[0];
   const serviceOptions = services.filter(({ value }) => value !== selectedServiceType);
+
+  useEffect(() => {
+    if (!serviceMenuOpen) return undefined;
+
+    const handleOutsideClick = (event) => {
+      if (!serviceDropdownRef.current?.contains(event.target)) {
+        setServiceMenuOpen(false);
+      }
+    };
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') setServiceMenuOpen(false);
+    };
+
+    document.addEventListener('mousedown', handleOutsideClick);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('mousedown', handleOutsideClick);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [serviceMenuOpen]);
 
   // ─── Payment method options ───
   const paymentMethods = [
@@ -55,53 +73,29 @@ export default function BookingForm() {
     setError(null);
 
     try {
-      // 1. Check if client exists, or create them
-      let clientId;
+      const bookingResponse = await fetch('/api/booking/create', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          clientName: formData.clientName,
+          clientEmail: formData.clientEmail,
+          serviceType: selectedServiceType,
+        }),
+      });
 
-      const { data: existingClient } = await supabase
-        .from('clients')
-        .select('id')
-        .eq('email', formData.clientEmail)
-        .single();
+      const bookingData = await bookingResponse.json();
 
-      if (existingClient) {
-        clientId = existingClient.id;
-      } else {
-        const { data: newClient, error: clientError } = await supabase
-          .from('clients')
-          .insert({
-            name: formData.clientName,
-            email: formData.clientEmail,
-          })
-          .select()
-          .single();
-
-        if (clientError) throw clientError;
-        clientId = newClient.id;
+      if (!bookingResponse.ok) {
+        throw new Error(bookingData.error || 'Не удалось создать запись');
       }
 
-      // 2. Create booking in Supabase
-      const { data: booking, error: dbError } = await supabase
-        .from('bookings')
-        .insert({
-          client_id: clientId,
-          service_type: selectedServiceType,
-          amount: service.price,
-          duration_minutes: parseInt(service.duration),
-          notes: 'Ждёт согласования времени',
-        })
-        .select()
-        .single();
-
-      if (dbError) throw dbError;
-
-      // 3. Create YooKassa/ATOL payment with payment method
+      // Create payment after the booking has been created on the server.
       const res = await fetch('/api/payment/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          bookingId: booking.id,
-          amount: service.price,
+          bookingId: bookingData.booking.id,
+          amount: bookingData.booking.amount,
           description: `${service.name} — ${formData.clientName}`,
           paymentMethod: formData.paymentMethod, // ← pass payment method
         }),
@@ -121,6 +115,8 @@ export default function BookingForm() {
 
   return (
     <div className="booking-page">
+      <Navbar />
+
       <div className="booking-container">
         <Link
           href="/#services"
@@ -140,7 +136,7 @@ export default function BookingForm() {
           </p>
         </div>
 
-        <div className="booking-service-dropdown">
+        <div className="booking-service-dropdown" ref={serviceDropdownRef}>
           <button
             type="button"
             className="booking-service-summary"
@@ -253,6 +249,14 @@ export default function BookingForm() {
 
           <button type="submit" className="booking-submit" disabled={loading}>
             {loading ? 'Обработка...' : `Оплатить ${service.price.toLocaleString()} ₽`}
+          </button>
+
+          <button
+            type="button"
+            className="booking-test-button"
+            onClick={() => router.push('/booking/test/success')}
+          >
+            Test
           </button>
 
           <p className="booking-legal">
