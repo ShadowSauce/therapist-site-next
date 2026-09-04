@@ -99,7 +99,7 @@ export default function ServiceContent() {
         <div className="meta-row">
           <div className="item"><span>Длительность:</span> <strong id="duration">{serviceData.duration}</strong></div>
           <div className="item"><span>Формат:</span> <strong id="format">{serviceData.format}</strong></div>
-          <div className="item"><span>Price:</span> <strong id="price">{serviceData.price}</strong></div>
+          <div className="item"><span>Стоимость:</span> <strong id="price">{serviceData.price} рублей</strong></div>
         </div>
 
         <div
